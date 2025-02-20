@@ -38,14 +38,16 @@ CreateThread(function()
                 position = "right-center",
                 icon = "handshake",
                 style = {
-                    borderRadius = 10,
-                    backgroundColor = "#121212",
+                    borderRadius = 12,
+                    backgroundColor = "#1a1a1a",
                     color = "#ffffff",
-                    padding = "10px",
-                    fontSize = "14px",
-                    fontWeight = "bold"
+                    padding = "12px",
+                    fontSize = "15px",
+                    fontWeight = "bold",
+                    boxShadow = "0px 0px 10px rgba(255, 255, 255, 1)"
                 }
             })
+
         else
             exports.ox_lib:hideTextUI()
         end
@@ -59,8 +61,15 @@ RegisterNetEvent("ox_trade:openMenu", function()
 
     for _, trade in pairs(Config.Trades) do
         table.insert(menuOptions, {
-            title = trade.giveLabel .. " → " .. trade.getLabel,
-            description = "Give " .. trade.giveAmount .. "x " .. trade.giveLabel .. " to receive " .. trade.getAmount .. "x " .. trade.getLabel,
+            title = ("🛒 %s → %s"):format(trade.giveLabel, trade.getLabel),
+            description = ("Trade %sx %s for %sx %s"):format(trade.giveAmount, trade.giveLabel, trade.getAmount, trade.getLabel),
+            icon = "package",
+            iconColor = "#f8b400",
+            progress = math.random(85, 100),
+            metadata = {
+                {label = "📦 You Give", value = ("%s"):format(trade.giveLabel), color = "red"},
+                {label = "🎁 You Receive", value = ("%s"):format(trade.getLabel), color = "green"},
+            },
             event = "ox_trade:tradeItem",
             args = { 
                 giveItem = trade.giveItem, 
@@ -75,7 +84,19 @@ RegisterNetEvent("ox_trade:openMenu", function()
 
     exports.ox_lib:registerContext({
         id = "trade_menu",
-        title = "Trading Menu",
+        title = "🔄 Secure Trading Exchange",
+        description = "💰 Trade rare items for valuable rewards!",
+        position = "top-middle",
+        style = {
+            headerColor = "#f8b400",
+            backgroundColor = "#000000",
+            textColor = "#ffffff",
+            borderRadius = 12,
+            padding = 12,
+            fontSize = "16px",
+            fontFamily = "Poppins, sans-serif",
+            boxShadow = "0px 0px 14px rgba(248, 180, 0, 0.8)"
+        },
         options = menuOptions
     })
 
